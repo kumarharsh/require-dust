@@ -8,7 +8,7 @@
 /*global define, window, XMLHttpRequest, importScripts, Packages, java,
   ActiveXObject, process, require */
 
-define(['dust'], function(dust) {
+define(['dust-helpers'], function(dust) {
     'use strict';
     var fs, getXhr,
         progIds = ['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'],
@@ -16,7 +16,7 @@ define(['dust'], function(dust) {
             throw new Error('Environment unsupported.');
         },
         buildMap = {};
-    
+
     dust || (dust = exports);
 
     if (typeof process !== "undefined" &&
@@ -121,7 +121,7 @@ define(['dust'], function(dust) {
             fetchText(path, function (text) {
                 //Do dust transform.
                 try {
-                  text = "define(['dust'],function(dust){"+dust.compile(text, name)+" return {render: function(context, callback) {return dust.render('"+name+"', context, callback)}}})";
+                  text = "define(['dust-helpers'],function(dust){"+dust.compile(text, name)+" return {render: function(context, callback) {return dust.render('"+name+"', context, callback)}}})";
                 }
                 catch (err) {
                   err.message = "In " + path + ", " + err.message;
